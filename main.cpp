@@ -2,8 +2,6 @@
 #include <limits>
 #include <algorithm>
 #include <cmath>
-#include <regex>
-#include <vector>
 
 using namespace std;
 
@@ -114,19 +112,19 @@ bool investovat(Hra& hra, bool isEasy)
 	if (investice != 6 && investice != 10)
 		return 1;
 
-	if (hra.penize < investice) {
-		cout << "NEMÁŠ DOSTATEK FINANCÍ!";
-		return 0;
-	}
-
 	if (hra.penize_za_kolo > ((investice == 6) ? 4 : 3) && !isEasy || hra.penize_za_kolo > ((investice == 6) ? 9 : 8)) {
 		cout << "Už jsi investoval až moc peněz!";
 		return 0;
 	}
 
+	if (hra.penize < investice) {
+		cout << "NEMÁŠ DOSTATEK FINANCÍ!";
+		return 0;
+	}
+
 	hra.penize -= investice;
 	hra.penize_za_kolo += floor(investice / 5);
-	cout << hra.penize_za_kolo;
+	cout << hra.penize_za_kolo << ((hra.penize_za_kolo > 4) ? " peněz" : " peníze") << " za kolo";
 	return 0;
 }
 
@@ -162,6 +160,7 @@ bool dalsi_kolo(Hra& hra, char obtiznost)
 		cout << "Nestihl jsi dohrát hru pod 50 kol.\nGAME OVER" << endl;
 		exit(0);
 	}
+
 	hra.penize += hra.penize_za_kolo;
 	hra.penize -= hra.banka;
 	hra.banka = 0;
@@ -180,7 +179,7 @@ bool dalsi_kolo(Hra& hra, char obtiznost)
 		}
 
 		hra.vojaci -= isHard ? 2000 : 1000;
-		cout << "Zaútočili na tebe! Nově máš " << hra.vojaci << " vojáků!";
+		cout << "Zaútočili na tebe! Nově máš " << hra.vojaci << " vojáků!" << endl;
 		hra.kola += 1;
 		break;
 	}

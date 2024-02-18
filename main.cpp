@@ -156,7 +156,7 @@ bool banka(Hra& hra)
 
 bool dalsi_kolo(Hra& hra, char obtiznost)
 {
-	if (hra.kola++ == 50) {
+	if (++hra.kola == 50) {
 		cout << "Nestihl jsi dohrát hru pod 50 kol.\nGAME OVER" << endl;
 		exit(0);
 	}
